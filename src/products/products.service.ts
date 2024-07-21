@@ -24,11 +24,16 @@ export class ProductsService {
     return product;
   }
 
-  update(id: number, updateProductDto: UpdateProductDto) {
-    return `This action updates a #${id} product`;
+  update(id: string, updateProductDto: UpdateProductDto) {
+    const { id: _, ...values } = updateProductDto;
+    const product = this.findOne(id);
+    product.updateWith(values);
+    return product;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} product`;
+  remove(id: string) {
+    const product = this.findOne(id);
+    this.products = this.products.filter((p) => p.id !== product.id);
+    return `Product ${id} deleted successfully`;
   }
 }
