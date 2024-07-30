@@ -6,6 +6,7 @@ import { UpdateProductDto } from './dto/update-product.dto';
 import { PrismaService } from 'src/config/db/prisma.service';
 import { Product } from '@prisma/client';
 import { PaginationDto } from 'src/common';
+import { RpcException } from '@nestjs/microservices';
 
 @Injectable()
 export class ProductsService {
@@ -52,7 +53,9 @@ export class ProductsService {
     });
     // const products = await this.findAll();
     // const product = products.find((p) => p.id === id);
-    if (!product) throw new NotFoundException('PRODUCT_NOT_FOUND');
+    // if (!product) throw new NotFoundException('PRODUCT_NOT_FOUND');
+    if (!product) throw new RpcException('PRODUCT_NOT_FOUND');
+    //SE CAMBIO NOT FOUND EXCEPTION FOR RPC EXCEPTION
     return product;
   }
 
