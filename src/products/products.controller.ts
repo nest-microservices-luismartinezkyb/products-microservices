@@ -14,6 +14,7 @@ import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { PaginationDto } from 'src/common';
 import { MessagePattern, Payload } from '@nestjs/microservices';
+import { DeleteProductDto } from './dto/delete-product.dto';
 
 @Controller('products')
 export class ProductsController {
@@ -47,7 +48,7 @@ export class ProductsController {
 
   // @Delete(':id')
   @MessagePattern({ cmd: 'delete_product' })
-  remove(@Param('id') id: string) {
-    return this.productsService.remove(id);
+  remove(@Payload() data: DeleteProductDto) {
+    return this.productsService.remove(data.id);
   }
 }
