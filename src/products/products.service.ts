@@ -86,4 +86,18 @@ export class ProductsService {
       message: `Product ${id} deleted successfully`,
     };
   }
+
+  async functionToUpdate(id: string) {
+    //THIS FUNCTION TARDA 3 seconds
+    for (let i = 0; i < 3; i++) {
+      console.log('object', i);
+      await this.delay(1000);
+    }
+    console.log('termino');
+    // throw new RpcException('PRODUCT_NOT_FOUND');
+    return `This action returns a #${id} user`;
+  }
+  private async delay(ms: number) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  }
 }

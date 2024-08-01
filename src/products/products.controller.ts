@@ -13,7 +13,7 @@ import { ProductsService } from './products.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { PaginationDto } from 'src/common';
-import { MessagePattern, Payload } from '@nestjs/microservices';
+import { EventPattern, MessagePattern, Payload } from '@nestjs/microservices';
 import { DeleteProductDto } from './dto/delete-product.dto';
 
 @Controller('products')
@@ -50,5 +50,15 @@ export class ProductsController {
   @MessagePattern({ cmd: 'delete_product' })
   remove(@Payload() data: DeleteProductDto) {
     return this.productsService.remove(data.id);
+  }
+
+  @MessagePattern({ cmd: 'wait_response' })
+  waitForR(@Payload() data: DeleteProductDto) {
+    return this.productsService.functionToUpdate(data.id);
+  }
+
+  @EventPattern({ cmd: 'not_wait_response' })
+  notWaitForR(@Payload() data: DeleteProductDto) {
+    return this.productsService.functionToUpdate(data.id);
   }
 }
